@@ -1,0 +1,37 @@
+{% extends "header.html" %}
+{% block header_map %}
+      <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+      <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+{% endblock %}
+{% block content %}
+<div id="about" class="container-fluid">
+   <div class="row">  
+      <div id = "map" style = "width: 900px; height: 580px"></div>
+      <script>
+         // Creating map options
+         var mapOptions = {
+            center: {{ lat_long[0] }},
+            zoom: 11 
+         }
+         // Creating a map object
+         var map = new L.map('map', mapOptions);
+         // Creating a Layer object
+         var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+         // Adding layer to the map
+         map.addLayer(layer);
+         // Creating latlng object
+         var latlang = [
+            {{ lat_long }}
+         ];
+         // Creating multi polygon options
+         var multiPolygonOptions = {color:'red', weight:8};
+         
+         // Creating multi polygons
+         var multipolygon = L.multiPolygon(latlang , multiPolygonOptions);
+         
+         // Adding multi polygon to map
+         multipolygon.addTo(map);
+      </script>
+   </div>
+</div>
+{% endblock %}

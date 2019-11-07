@@ -1,0 +1,33 @@
+{% extends "header.html" %}
+{% block header_map %}
+<link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+<script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script type = "text/javascript" src = "{{ url_for('static', filename = 'leaflet-heat.js') }}" ></script>
+{% endblock %}
+{% block content %}
+<div id="about" class="container-fluid">
+   <div class="row">  
+      <div id = "map" style = "width: 900px; height: 580px"></div>
+      <script>
+         // Creating map options
+         var mapOptions = {
+            center: {{ lat_long[0] }},
+            zoom: 11 
+         }
+         // Creating a map object
+         var map = new L.map('map', mapOptions);
+         // Creating a Layer object
+         var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+         // Adding layer to the map
+         map.addLayer(layer);
+         // Adding multi polygon to map
+                   var heat = L.heatLayer([
+                        // [17.385044, 78.486671, 8000000], // lat, lng, intensity
+                        // [12.971599, 77.594563, 10000],
+                        {{ latlong_intensity }}
+                    ], {radius: {{ radius    }} }).addTo(map);
+         
+      </script>
+   </div>
+</div>
+{% endblock %}

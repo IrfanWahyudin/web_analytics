@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block header %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{ url_for('location') }}">B.I.G</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          {% if is_authenticated %}
+          <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+          <li><a href="{{ url_for('location') }}">LOCATION</a></li>
+          <li><a href="{{ url_for('upload') }}">UPLOAD</a></li>
+
+          {% else %}
+          <li><a href="{{ url_for('login') }}">LOGIN</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+</nav>
+{% endblock %}

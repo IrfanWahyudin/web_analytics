@@ -1,0 +1,97 @@
+{% extends "header.html" %}
+
+{% block content %}
+<div id="about" class="container-fluid">
+    <div class="row">
+        <h1>Location</h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                <div class="message_flash">{{ message }}</div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+        <div class="col-sm-4">
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.location_name.label }}<br>
+                    {{ form.location_name(placeholder='Location Name', size=40) }}<br>
+                    {% for error in form.location_name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.city.label }}<br>
+                    {{ form.city(placeholder='City', size=40) }}<br>
+                    {% for error in form.city.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.lat_long.label }}<br>
+                    {{ form.lat_long(placeholder='Coordinates', size=40) }}<br>
+                    {% for error in form.lat_long.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.address.label }}<br>
+                    {{ form.address(placeholder='Address', size=40) }}<br>
+                    {% for error in form.address.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>{{ form.submit() }}</p>
+            </form>
+        </div>
+    </div>   
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Location Name
+                        </th>
+                        <th>
+                            City
+                        </th>
+                        <th>
+                            Coordinates
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in location_data %}
+                    <tr>
+                        <td>
+                            {{ row[0] }}
+                        </td>
+                        <td>
+                            {{ row[4] }}
+                        </td>
+                        <td>
+                            {{ row[1] }}
+                        </td>
+                        <td>
+                            {{ row[3] }}
+                        </td>
+                        <td>
+                            <a href="{{ url_for("location_delete",location_name=row[0]) }}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>     
+{% endblock %}

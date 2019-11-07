@@ -1,0 +1,41 @@
+{% extends "header.html" %}
+
+{% block content %}
+<div id="about" class="container-fluid">
+    <div class="row">
+        <h1>Titanic Chart</h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                <div class="message_flash">{{ message }}</div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+        <div class="col-sm-8">
+            <div class="chart" id="titanic_chart1">
+            <script>
+                var trace1 = {
+                    x: {{ xtrace1|safe }}, 
+                    y: {{ ytrace1|safe }}, 
+                    name: {{ name1|safe }}, 
+                    type: 'bar'
+                };
+                
+                var trace2 = {
+                    x: {{ xtrace2|safe }}, 
+                    y: {{ ytrace2|safe }}, 
+                    name: {{ name2|safe }}, 
+                    type: 'bar'
+                };
+                
+                var data = [trace1, trace2];
+                var layout = {barmode: 'group'};
+                
+                Plotly.newPlot('titanic_chart1', data, layout, {}, {showSendToCloud:true});
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock %}
