@@ -14,27 +14,59 @@
         {% endif %}
         {% endwith %}
         <div class="col-sm-8">
-            <div class="chart" id="titanic_chart1">
+            <div class="chart" id="titanic_chart1"></div>
             <script>
+                var layout = {
+                title: {
+                    text:'Survival Chart',
+                    font: {
+                    family: 'Courier New, monospace',
+                    size: 24
+                    },
+                    xref: 'paper',
+                    x: 0.05,
+                },barmode: 'group'}
                 var trace1 = {
-                    x: {{ xtrace1|safe }}, 
-                    y: {{ ytrace1|safe }}, 
+                    x: {{ ytrace1|safe }}, 
+                    y: {{ xtrace1|safe }}, 
                     name: {{ name1|safe }}, 
                     type: 'bar'
                 };
                 
                 var trace2 = {
-                    x: {{ xtrace2|safe }}, 
-                    y: {{ ytrace2|safe }}, 
+                    x: {{ ytrace2|safe }}, 
+                    y: {{ xtrace2|safe }}, 
                     name: {{ name2|safe }}, 
                     type: 'bar'
                 };
                 
                 var data = [trace1, trace2];
-                var layout = {barmode: 'group'};
                 
                 Plotly.newPlot('titanic_chart1', data, layout, {}, {showSendToCloud:true});
             </script>
+        </div>
+        <div class="col-sm-4">
+            <div class="chart" id="pclass_chart"></div>
+            <script>
+                 var layout = {
+                title: {
+                    text:'Pclass Chart',
+                    font: {
+                    family: 'Courier New, monospace',
+                    size: 24
+                    },
+                    xref: 'paper',
+                    x: 0.05,
+                },}
+                var data = [{
+                values: {{ count|safe }},
+                labels: {{ labels|safe }},
+                type: 'pie'
+                }];
+
+                Plotly.newPlot('pclass_chart', data, layout, {}, {showSendToCloud:true});
+            </script>
+            </div>
         </div>
     </div>
 </div>

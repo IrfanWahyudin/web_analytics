@@ -3,7 +3,7 @@
 {% block content %}
 <div id="about" class="container-fluid">
     <div class="row">
-        <h1>Register</h1>
+        <h1>Location</h1>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul class="flashes">
@@ -14,39 +14,39 @@
         {% endif %}
         {% endwith %}
         <div class="col-sm-4">
-            <form action="" method="post">
-                {{ form.hidden_tag() }}
-                <p>
-                    {{ form.username.label }}<br>
-                    {{ form.username(placeholder='Username', size=40) }}<br>
-                    {% for error in form.username.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.email.label }}<br>
-                    {{ form.email(placeholder='E-Mail', size=40) }}<br>
-                    {% for error in form.email.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.password.label }}<br>
-                    {{ form.password(size=40) }}<br>
-                    {% for error in form.password.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>
-                    {{ form.password2.label }}<br>
-                    {{ form.password2(size=40) }}<br>
-                    {% for error in form.password2.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
-                </p>
-                <p>{{ form.submit() }}</p>
+            <form action="" method="POST">
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ form.username.label }} <br>
+                        {{ form.username(placeholder='Username', size=40)}} <br>
+                        {% for error in form.username.errors % }
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.email.label }} <br>
+                        {{ form.email(placeholder='email', size=40)}} <br>
+                        {% for error in form.email.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.password.label }} <br>
+                        {{ form.password(size=40)}} <br>
+                        {% for error in form.password.errors % }
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.password2.label }} <br>
+                        {{ form.password2(size=40)}} <br>
+                        {% for error in form.password2.errors % }
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>{{ for.submit() }}</p>
             </form>
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock %s}

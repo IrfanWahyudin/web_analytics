@@ -12,20 +12,23 @@ class Location(db.Model):
     city = db.Column(db.String(200))
     def __repr__(self):
         return '{}|{}|{}|{}|{}'.format(self.location_name, self.lat_long, self.created_by, self.address, self.city) 
-        
+
+@login.unauthorized_handler
+def unauthorized():
+    return "<h1>Unauthorized</h1>"
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
+    
 class User(UserMixin, db.Model):
-    # __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
 
     def __repr__(self):
-        return '{}|{}|{}'.format(self.id, self.username, self.email, self.password_hash)
+        return '{}|{}|{}|{}|{}'.format(self.id, self.email, self.username, self.address, self.password_hash) 
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -34,6 +37,9 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
 class Titanic(db.Model):
+    # 'PassengerId', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
+    #    'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked'],
+    #   dtype='object'
     PassengerId = db.Column(db.Float, primary_key = True)
     Survived = db.Column(db.Float)
     Pclass = db.Column(db.Float)
@@ -45,7 +51,10 @@ class Titanic(db.Model):
     Ticket = db.Column(db.String(20))
     Fare = db.Column(db.Float)
     Cabin = db.Column(db.String(20))
-    Embarked = db.Column(db.String(100))
+    Embarked = db.Column(db.String(20))
+
+
+
 
     
 

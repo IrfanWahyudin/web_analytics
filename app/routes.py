@@ -1,17 +1,19 @@
 from app import app
 from flask import render_template, flash, redirect, url_for
-
 from flask_login import current_user, login_user, logout_user, login_required
 from app.forms import LocationForm, RegistrationForm, LoginForm, UploadForm
-from werkzeug import secure_filename
 import os
 
 from app import db
-from app.models import Location, User
+from app.models import Location, User, Titanic
 from sqlalchemy.exc import IntegrityError
+from werkzeug import secure_filename
 import ast
 
-@login_required
+def validate_login():
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+
 @app.route('/location', methods=['GET', 'POST'])
 def location():
     form = LocationForm()    
@@ -43,7 +45,6 @@ def location():
     return render_template('location.html', form=form, location_data=location_data,\
                             is_authenticated=current_user.is_authenticated)
 
-@login_required
 @app.route('/location_delete/<location_name>', methods=['GET'])
 def location_delete(location_name):
     location = db.session.query(Location).filter(Location.location_name==location_name).first()
@@ -51,6 +52,16 @@ def location_delete(location_name):
     db.session.commit()
 
     return redirect(url_for('location'))
+        
+@app.errorhandler(401)
+def unauthorized(e):
+    # note that we set the 404 status explicitly
+    return "<h1>Unauthorized</h1>", 401
+
+
+
+
+
 
 @app.route('/logout')
 def logout():
@@ -116,15 +127,24 @@ def upload():
                             is_authenticated=current_user.is_authenticated)
 
 @app.route('/titanic_chart')
+@login_required
 def titanic_chart():
     from app.my_lib.titanic import TitanicChart
     import json
     titanic_chart = TitanicChart()
-    xtrace1, ytrace1, xtrace2, ytrace2, name1, name2 = titanic_chart.titanic_chart1()
+    xtrace1, ytrace1, xtrace2, ytrace2, name1, name2, labels, count =\
+         titanic_chart.titanic_chart()
 
     return render_template('titanic_chart.html',\
-                            xtrace1=xtrace1,xtrace2=xtrace2,ytrace1=json.dumps(ytrace1),ytrace2=json.dumps(ytrace2),\
-                                name1=json.dumps(name1),name2=json.dumps(name2))
+                            xtrace1=xtrace1,\
+                                xtrace2=xtrace2,\
+                                ytrace1=json.dumps(ytrace1),\
+                                ytrace2=json.dumps(ytrace2),\
+                                name1=json.dumps(name1),\
+                                name2=json.dumps(name2),\
+                                labels=json.dumps(labels),\
+                                count=json.dumps(count),\
+                                is_authenticated=current_user.is_authenticated)
 
 
 @app.route('/location_map_1/<location_name>', methods=['GET'])

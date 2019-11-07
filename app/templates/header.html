@@ -18,6 +18,8 @@
           {% if is_authenticated %}
           <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
           <li><a href="{{ url_for('location') }}">LOCATION</a></li>
+          <li><a href="{{ url_for('titanic_chart') }}">TITANIC CHART</a></li>
+
           <li><a href="{{ url_for('upload') }}">UPLOAD</a></li>
 
           {% else %}

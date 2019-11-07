@@ -41,4 +41,7 @@ class LoginForm(FlaskForm):
 
 class UploadForm(FlaskForm):
     file = FileField()
-    submit = SubmitField('Upload')
+    submit = SubmitField("Upload")
+
+
+
